@@ -4,7 +4,7 @@ import homeStyles from "./Home.style"
 function Home() {
   return (
     <View>
-      <Text>Home View</Text>
+      <Text>Home Screen</Text>
     </View>
   )
 }
