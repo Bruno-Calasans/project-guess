@@ -58,9 +58,9 @@ function createVariant<V extends string>(
       }
     },
     merge() {
-      let mergedStyle: ViewStyle = {}
-      for (let key in this.styles) {
-        mergedStyle = { ...mergedStyle, ...this.styles[key] }
+      let mergedStyle: Style = {}
+      for (let variant in this.variants) {
+        mergedStyle = { ...mergedStyle, ...this.variants[variant] }
       }
       return mergedStyle
     },
