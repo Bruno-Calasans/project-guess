@@ -2,11 +2,11 @@ import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from "react-native"
 
 type Style = ViewStyle | TextStyle | ImageStyle
 type StyleProp = keyof Style
-type Variant<V extends string> = Record<V, Style>
-type PartialVariant<V extends string> = Partial<Variant<V>>
+export type VariantStyle<V extends string> = Record<V, Style>
+type PartialVariant<V extends string> = Partial<VariantStyle<V>>
 
-type StyleManager<V extends string> = {
-  styles: Variant<V>
+type Variant<V extends string> = {
+  styles: VariantStyle<V>
   variants: PartialVariant<V>
   clear: () => void
   add: (variants: V[]) => void
@@ -17,8 +17,11 @@ type StyleManager<V extends string> = {
   merge: () => Style
 }
 
-function VariantStyles<V extends string>(styles: Variant<V>, defaultStyle?: V) {
-  const manager: StyleManager<V> = {
+function createVariant<V extends string>(
+  styles: VariantStyle<V>,
+  defaultStyle?: V
+) {
+  const variant: Variant<V> = {
     styles,
     variants: {},
     clear() {
@@ -67,10 +70,10 @@ function VariantStyles<V extends string>(styles: Variant<V>, defaultStyle?: V) {
   }
 
   if (defaultStyle) {
-    manager.add([defaultStyle])
+    variant.add([defaultStyle])
   }
 
-  return manager
+  return variant
 }
 
-export default VariantStyles
+export default createVariant
