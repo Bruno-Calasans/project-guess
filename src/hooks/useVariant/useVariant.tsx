@@ -15,6 +15,7 @@ function useVariant<V extends string, P extends string>(
     variants,
     defaultStyle: null,
     appliedVariants: null,
+    selectedProp: {},
   })
 
   const apply = (name: V) => {
@@ -22,6 +23,17 @@ function useVariant<V extends string, P extends string>(
     setState((curr) => ({
       ...curr,
       appliedVariants: { ...curr.appliedVariants, [name]: variant },
+    }))
+  }
+
+  const remove = (name: V) => {
+    const appliedVariants = state.appliedVariants
+    if (appliedVariants && appliedVariants[name]) {
+      delete appliedVariants[name]
+    }
+    setState((curr) => ({
+      ...curr,
+      appliedVariants: appliedVariants,
     }))
   }
 
@@ -103,6 +115,16 @@ function useVariant<V extends string, P extends string>(
     return style
   }
 
+  const selectProp = (variant: V, prop: P) => {
+    setState((curr) => ({
+      ...curr,
+      selectedProp: {
+        prop,
+        variant,
+      },
+    }))
+  }
+
   useEffect(() => {
     if (defaultStyleName) {
       reset()
@@ -114,6 +136,7 @@ function useVariant<V extends string, P extends string>(
     get,
     set,
     apply,
+    remove,
     setProp,
     setDefault,
     getStyle,
