@@ -5,6 +5,7 @@ import Box from "./src/components/Box/Box"
 import Group from "./src/components/Group/Group"
 import TextInput from "./src/components/Input/TextInput/TextInput"
 import NumberInput from "./src/components/Input/NumberInput/NumberInput"
+import { LinearGradient } from "expo-linear-gradient"
 
 export default function App() {
   return (
