@@ -9,6 +9,7 @@ type NumberInputProps = {
   ph?: string
   c?: Style["color"]
   start?: number
+  value?: string
   minValue?: number
   maxValue?: number
   onChange?: (value: string) => void
@@ -18,6 +19,7 @@ function NumberInput({
   ph,
   c,
   start,
+  value,
   minValue,
   maxValue,
   onChange,
@@ -27,11 +29,12 @@ function NumberInput({
     InputVariantProps
   >(inputVariants, "default")
 
-  const [value, setValue] = useState("")
+  const [num, setNum] = useState("")
 
   const focusHandler = () => {
     set("focus")
   }
+  
   const blurHandler = () => {
     set("blur")
   }
@@ -54,7 +57,7 @@ function NumberInput({
       onChange(numberText)
     }
 
-    setValue(numberText)
+    setNum(numberText)
   }
 
   const checkStartValue = () => {
@@ -68,7 +71,7 @@ function NumberInput({
       startValue = maxValue
     }
 
-    setValue(String(startValue))
+    setNum(String(startValue))
   }
 
   useEffect(() => {
@@ -99,7 +102,7 @@ function NumberInput({
         keyboardType="numeric"
         autoCapitalize="none"
         autoCorrect={false}
-        value={value}
+        value={value ?? num}
       />
     </View>
   )

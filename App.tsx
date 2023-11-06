@@ -1,13 +1,17 @@
-import { StatusBar } from "expo-status-bar"
-import { StyleSheet, Text, View, ImageBackground } from "react-native"
-import Button from "./src/components/Button/Button"
-import Box from "./src/components/Box/Box"
-import Group from "./src/components/Group/Group"
-import TextInput from "./src/components/Input/TextInput/TextInput"
-import NumberInput from "./src/components/Input/NumberInput/NumberInput"
+import { StyleSheet, View, ImageBackground, Alert } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import Home from "./src/screens/Home/Home"
+import { useState } from "react"
 
 export default function App() {
+  const [num, setNum] = useState("")
+  const [home, setHome] = useState(true)
+
+  const pickNumberHandler = (num: string) => {
+    setNum(num)
+    setHome(false)
+  }
+
   return (
     <LinearGradient colors={["#FF4E50", "#F9D423"]} style={styles.container}>
       <ImageBackground
@@ -18,19 +22,7 @@ export default function App() {
         }}
         resizeMode="cover" // default
       >
-        <Box bg="rgba(165, 138, 112, 0.253)" w="90%" gap={10} pd={10}>
-          <View>
-            <NumberInput
-              ph="Choose a number"
-              c="white"
-              onChange={console.log}
-            />
-          </View>
-          <Box gap={5}>
-            <Button title="Reset" variant="filled" bg="purple" w="100%" />
-            <Button title="Confirm" variant="filled" bg="purple" w="100%" />
-          </Box>
-        </Box>
+        {home && <Home onPickNumber={pickNumberHandler} />}
       </ImageBackground>
     </LinearGradient>
   )

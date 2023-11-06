@@ -34,17 +34,16 @@ function Button({
   onPress,
   onLongPress,
 }: ButtonProps) {
-  const { getStyle, set, apply, remove, get } = useVariant<
+  const { getStyle, set, apply } = useVariant<
     ButtonVariants,
     ButtonVariantProps
   >(btnVariants, "default")
 
   const pressHandler = () => {
     apply("clicked")
-  }
-
-  const pressOutHandler = () => {
-    remove("clicked")
+    if (onPress) {
+      onPress()
+    }
   }
 
   useEffect(() => {

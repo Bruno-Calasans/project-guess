@@ -1,11 +1,59 @@
-import { View, Text } from "react-native"
-import homeStyles from "./Home.style"
+import { View, Alert } from "react-native"
+import { useState } from "react"
+import Box from "../../components/Box/Box"
+import NumberInput from "../../components/Input/NumberInput/NumberInput"
+import Button from "../../components/Button/Button"
 
-function Home() {
+type HomeProps = {
+  onPickNumber?: (num: string) => void
+}
+
+function Home({ onPickNumber }: HomeProps) {
+  const [num, setNum] = useState("")
+
+  const submitHandler = () => {
+    if (Number(num) <= 0) {
+      return Alert.alert(
+        "Número Inválido",
+        "Você deve informar um número maior que 0"
+      )
+    }
+
+    if (onPickNumber) {
+      onPickNumber(num)
+    }
+  }
+
+  const resetHandler = () => {
+    setNum("")
+  }
   return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
+    <Box bg="rgba(165, 138, 112, 0.253)" w="90%" gap={10} pd={10}>
+      <View>
+        <NumberInput
+          ph="Choose a number"
+          c="white"
+          value={num}
+          onChange={setNum}
+        />
+      </View>
+      <Box gap={5}>
+        <Button
+          title="Reset"
+          variant="filled"
+          bg="purple"
+          w="100%"
+          onPress={resetHandler}
+        />
+        <Button
+          title="Confirm"
+          variant="filled"
+          bg="purple"
+          w="100%"
+          onPress={submitHandler}
+        />
+      </Box>
+    </Box>
   )
 }
 
