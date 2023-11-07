@@ -1,18 +1,23 @@
-import { StyleSheet, ImageBackground } from "react-native"
+import { StyleSheet, ImageBackground, StatusBar } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useState } from "react"
 
 // screens
 import Home from "./src/screens/Home/Home"
+import Game from "./src/screens/Game/Game"
 
 export default function App() {
   const [pickedNum, setPickedNum] = useState("")
-  const [home, setHome] = useState(true)
+  const [home, setHome] = useState(false)
+  const [game, setGame] = useState(true)
 
   const pickNumberHandler = (num: string) => {
     setPickedNum(num)
     setHome(false)
+    setGame(true)
   }
+
+  const gameOverhandler = () => {}
 
   return (
     <LinearGradient colors={["#FF4E50", "#F9D423"]} style={styles.container}>
@@ -25,6 +30,7 @@ export default function App() {
         resizeMode="cover" // default
       >
         {home && <Home onPickNumber={pickNumberHandler} />}
+        {game && <Game pickedNum={50} onGameOver={gameOverhandler} />}
       </ImageBackground>
     </LinearGradient>
   )
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: StatusBar.currentHeight,
     alignItems: "center",
   },
   bgImage: {
