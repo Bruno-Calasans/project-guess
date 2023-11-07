@@ -1,14 +1,16 @@
-import { StyleSheet, View, ImageBackground, Alert } from "react-native"
+import { StyleSheet, ImageBackground } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
-import Home from "./src/screens/Home/Home"
 import { useState } from "react"
 
+// screens
+import Home from "./src/screens/Home/Home"
+
 export default function App() {
-  const [num, setNum] = useState("")
+  const [pickedNum, setPickedNum] = useState("")
   const [home, setHome] = useState(true)
 
   const pickNumberHandler = (num: string) => {
-    setNum(num)
+    setPickedNum(num)
     setHome(false)
   }
 
