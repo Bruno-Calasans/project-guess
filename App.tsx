@@ -1,15 +1,19 @@
 import { StyleSheet, ImageBackground, StatusBar } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useState } from "react"
+import COLORS from "./src/constants/colors"
 
 // screens
 import Home from "./src/screens/Home/Home"
 import Game from "./src/screens/Game/Game"
+import Gameover from "./src/screens/GameOver/Gameover"
 
 export default function App() {
   const [pickedNum, setPickedNum] = useState("")
+  const [guesses, setGuesses] = useState<number[]>([])
   const [home, setHome] = useState(false)
-  const [game, setGame] = useState(true)
+  const [game, setGame] = useState(false)
+  const [gameover, setGameover] = useState(true)
 
   const pickNumberHandler = (num: string) => {
     setPickedNum(num)
@@ -17,20 +21,36 @@ export default function App() {
     setGame(true)
   }
 
-  const gameOverhandler = () => {}
+  const gameoverHandler = (guesses: number[]) => {
+    setGame(false)
+    setGameover(true)
+    setGuesses(guesses)
+  }
+
+  const playAgainHandler = () => {
+    setGameover(false)
+    setHome(true)
+    setGuesses([])
+  }
 
   return (
-    <LinearGradient colors={["#FF4E50", "#F9D423"]} style={styles.container}>
+    <LinearGradient
+      colors={[COLORS.bg.secondary, COLORS.bg.primary]}
+      style={styles.container}
+    >
       <ImageBackground
         style={styles.content}
         imageStyle={styles.bgImage}
-        source={{
-          uri: "https://raw.githubusercontent.com/academind/react-native-practical-guide-code/04-deep-dive-real-app/extra-files/images/background.png",
-        }}
-        resizeMode="cover" // default
+        source={require("./assets/background.png")}
+        resizeMode="cover"
       >
         {home && <Home onPickNumber={pickNumberHandler} />}
-        {game && <Game pickedNum={50} onGameOver={gameOverhandler} />}
+        {game && (
+          <Game pickedNum={Number(pickedNum)} onGameover={gameoverHandler} />
+        )}
+        {gameover && (
+          <Gameover guesses={guesses} onPlayAgain={playAgainHandler} />
+        )}
       </ImageBackground>
     </LinearGradient>
   )
@@ -39,13 +59,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     justifyContent: "flex-start",
   },
   content: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: StatusBar.currentHeight! + 50,
     alignItems: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   bgImage: {
     opacity: 0.16,
