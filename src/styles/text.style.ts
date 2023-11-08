@@ -1,5 +1,7 @@
 import { StyleSheet, TextStyle, ViewStyle } from "react-native"
 
+export type TextSize = "default" | "sm" | "md" | "lg" | "xl"
+
 const textStyle = StyleSheet.create({
   default: {
     fontFamily: "sans-serif",
@@ -17,13 +19,5 @@ const textStyle = StyleSheet.create({
     fontSize: 25,
   },
 })
-
-// export type TextSize = "sm" | "md" | "lg" | "xl"
-
-// export const getTextStyle = (size: TextSize) => {
-//   const styles: TextStyle[] = [textStyle.default]
-//   styles.push(textStyle[size])
-//   return styles
-// }
 
 export default textStyle

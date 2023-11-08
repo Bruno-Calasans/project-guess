@@ -12,8 +12,10 @@ type BoxProps = {
   bc?: Style["borderColor"]
   bw?: Style["borderWidth"]
   gap?: Style["gap"]
+  f?: Style["flex"]
   fd?: Style["flexDirection"]
   ai?: Style["alignItems"]
+  jc?: Style["justifyContent"]
   style?: Style
   children: React.ReactNode
 }
@@ -28,8 +30,10 @@ function Box({
   bc,
   bw,
   gap,
+  f,
   fd,
   ai,
+  jc,
   style,
 }: BoxProps) {
   const { container } = BoxStyle
@@ -45,8 +49,10 @@ function Box({
         borderColor: bc ?? container.borderColor,
         borderWidth: bw ?? container.borderWidth,
         padding: pd ?? container.padding,
+        flex: f ?? container.flex,
         flexDirection: fd ?? container.flexDirection,
         alignItems: ai ?? container.alignItems,
+        justifyContent: jc ?? container.justifyContent,
         ...style,
       }}
     >

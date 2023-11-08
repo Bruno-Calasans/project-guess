@@ -2,6 +2,9 @@ import { View, Text, Alert, ScrollView, FlatList } from "react-native"
 import { useEffect, useState } from "react"
 import GameStyle from "./Game.style"
 import Button from "../../components/Button/Button"
+import Box from "../../components/Box/Box"
+import Title from "../../components/Title/Title"
+import GuessLog from "./GuessLog/GuessLog"
 
 function genRanInt(min: number, max: number, except?: number) {
   const num = Math.floor(Math.random() * (max - min + 1)) + min
@@ -15,10 +18,10 @@ function genRanInt(min: number, max: number, except?: number) {
 
 type GameProps = {
   pickedNum: number
-  onGameOver: (guesses: number[]) => void
+  onGameover: (guesses: number[]) => void
 }
 
-function Game({ pickedNum, onGameOver }: GameProps) {
+function Game({ pickedNum, onGameover }: GameProps) {
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(100)
   const [guessedNum, setGuessedNum] = useState(0)
@@ -49,9 +52,8 @@ function Game({ pickedNum, onGameOver }: GameProps) {
   }
 
   const checkGameOver = () => {
-    // game over condition
     if (guessedNum === pickedNum) {
-      onGameOver(guesses)
+      onGameover(guesses)
     }
   }
 
@@ -66,46 +68,42 @@ function Game({ pickedNum, onGameOver }: GameProps) {
   }, [guessedNum])
 
   return (
-    <View style={GameStyle.container}>
-      <View style={GameStyle.header}>
-        <View style={GameStyle.title}>
-          <Text style={GameStyle.titleText}>Opponent's Guesses</Text>
-        </View>
-        <View style={GameStyle.guessTitle}>
+    <Box f={1}>
+      <Box gap={10} ai="center">
+        <Title>Opponent's Guesses</Title>
+        <Box w={60} ai="center" bc="snow" bw={5} br={50}>
           <Text style={GameStyle.guessTitleText}>{guessedNum}</Text>
-        </View>
-      </View>
+        </Box>
+      </Box>
 
-      <View style={GameStyle.footer}>
-        <View style={GameStyle.guesser}>
+      <Box f={1} pd={10} gap={10}>
+        <Box gap={10}>
           <Text style={GameStyle.guesserText}>Higher or Lower?</Text>
-          <View style={GameStyle.guesserBtns}>
+          <Box fd="row" ai="center" jc="center" gap={5}>
             <Button
               title="+"
               variant="outline"
+              w={30}
               onPress={() => guessHandler("higher")}
             />
             <Button
               title="-"
               variant="outline"
+              w={30}
               onPress={() => guessHandler("lower")}
             />
-          </View>
-        </View>
+          </Box>
+        </Box>
         <FlatList
           contentContainerStyle={GameStyle.guesses}
           data={guesses}
           keyExtractor={(item, index) => `${guesses.length - index}`}
           renderItem={({ item, index }) => (
-            <View style={GameStyle.guess}>
-              <Text style={GameStyle.guessText}>
-                #{guesses.length - index} guess: {item}
-              </Text>
-            </View>
+            <GuessLog pos={guesses.length - index} guess={item} />
           )}
         />
-      </View>
-    </View>
+      </Box>
+    </Box>
   )
 }
 

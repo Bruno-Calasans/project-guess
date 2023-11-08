@@ -1,8 +1,9 @@
-import { View, Alert } from "react-native"
+import { Alert } from "react-native"
 import { useState } from "react"
 import Box from "../../components/Box/Box"
 import NumberInput from "../../components/Input/NumberInput/NumberInput"
 import Button from "../../components/Button/Button"
+import Title from "../../components/Title/Title"
 
 type HomeProps = {
   onPickNumber?: (num: string) => void
@@ -28,15 +29,16 @@ function Home({ onPickNumber }: HomeProps) {
     setNum("")
   }
   return (
-    <Box bg="rgba(165, 138, 112, 0.253)" w="90%" gap={10} pd={10}>
-      <View>
+    <Box bg="rgba(165, 138, 112, 0.253)" w="100%" gap={10} pd={10}>
+      <Box gap={10}>
+        <Title>Guess the Number</Title>
         <NumberInput
           ph="Choose a number"
           c="white"
           value={num}
           onChange={setNum}
         />
-      </View>
+      </Box>
       <Box gap={5}>
         <Button
           title="Reset"
